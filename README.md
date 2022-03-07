@@ -1,0 +1,2 @@
+# SailDB
+The succesor to ReflectDB. Sail (Space and Integer Interaction Language) is a custom made language than uses seperate spaces as a type of directory system. The code to SailDB is fully open-source and light weight.
