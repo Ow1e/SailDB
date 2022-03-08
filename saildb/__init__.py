@@ -10,12 +10,23 @@ def run_type(objtype):
 def find_type(object):
     return {int: "i", float: "f", str: "s", dict: "d", bool: "b", NoneType: "n"}[object]
 
+def advance(string):
+    passings = 0
+    product = ""
+    for i in string:
+        if i == ":" and product == "":
+            passings += 1
+        
+        if passings >= 3:
+            product += i
+    return product.removesuffix(";")[1:]
+
 def parse(string : str):
     contents = string.split(":")
     mapping = int(contents[0])
     directive = str(contents[1])
     objtype = str(contents[2])
-    result = contents[3]
+    result = advance(string)
     pass_through = run_type(objtype)
     return mapping, directive, pass_through, result
 
@@ -87,10 +98,10 @@ def dump(data, deep = 1):
                 new[l] = d
             current = new
         if type(current) == dict:
-            product += f"{deep}:{i}:{find_type(type(current))}:{str(deep+1)}\n"
+            product += f"{deep}:{i}:{find_type(type(current))}:{str(deep+1)};\n"
             product += dump(current, deep=deep+1)
         else:
-            product += f"{deep}:{i}:{find_type(type(current))}:{str(current)}\n"
+            product += f"{deep}:{i}:{find_type(type(current))}:{str(current)};\n"
     if deep!=1:
         return product
     else:
